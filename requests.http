@@ -3,7 +3,7 @@ POST http://localhost:8081/api/v1/users HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Bruno",
+  "name": "Bruno Toppen",
   "username": "brxlx",
   "password": "123"
 }

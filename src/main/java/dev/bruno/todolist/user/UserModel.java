@@ -1,20 +1,11 @@
 package dev.bruno.todolist.user;
 
+import lombok.Data;
+
+@Data
 public class UserModel {
-  String name;
-  
-  String username;
-  String password;
-  
-  public String getName() {
-    return name;
-  }
+  private String name;
+  private String username;
+  private String password;
 
-  public String getUsername(){
-    return username;
-  }
-
-  public String getPassword() {
-    return password;
-  }
 }
