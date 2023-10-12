@@ -27,22 +27,21 @@ public class FilterTaskAuth extends OncePerRequestFilter {
 
       // Pegar dados da autenticação
       var encondedAuthData = request.getHeader("Authorization").substring("Basic".length()).trim();
-  
+
       byte[] decodedAuth = Base64.getDecoder().decode(encondedAuthData);
-  
+
       var authData = new String(decodedAuth);
-  
+
       String[] credentials = authData.split(":");
-  
+
       String username = credentials[0];
       String password = credentials[1];
-  
+
       // Validar usuário
       var hasUser = this.userRepository.findByUsername(username);
       if (hasUser == null) {
         response.sendError(401, "Unauthorized");
       } else {
-  
         // Validar senha
         var verifiedPassword = BCrypt.verifyer().verify(password.toCharArray(), hasUser.getPassword());
         if (verifiedPassword.verified) {
@@ -54,8 +53,8 @@ public class FilterTaskAuth extends OncePerRequestFilter {
           response.sendError(401, "Unauthorized");
         }
       }
-    }else{
-       filterChain.doFilter(request, response);
+    } else {
+      filterChain.doFilter(request, response);
     }
   }
 
