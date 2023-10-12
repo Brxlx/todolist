@@ -22,33 +22,40 @@ public class FilterTaskAuth extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
-    // Pegar dados da autenticação
-    var encondedAuthData = request.getHeader("Authorization").substring("Basic".length()).trim();
 
-    byte[] decodedAuth = Base64.getDecoder().decode(encondedAuthData);
+    if (request.getServletPath().equals("/api/v1/tasks")) {
 
-    var authData = new String(decodedAuth);
-
-    String[] credentials = authData.split(":");
-
-    String username = credentials[0];
-    String password = credentials[1];
-
-    // Validar usuário
-    var hasUser = this.userRepository.findByUsername(username);
-    if (hasUser == null) {
-      response.sendError(401, "Unauthorized");
-    } else {
-
-      // Validar senha
-      var verifiedPassword = BCrypt.verifyer().verify(password.toCharArray(), hasUser.getPassword());
-      if (verifiedPassword.verified) {
-        // Seguir execução do código
-        filterChain.doFilter(request, response);
-      }else{
-        // Não não
+      // Pegar dados da autenticação
+      var encondedAuthData = request.getHeader("Authorization").substring("Basic".length()).trim();
+  
+      byte[] decodedAuth = Base64.getDecoder().decode(encondedAuthData);
+  
+      var authData = new String(decodedAuth);
+  
+      String[] credentials = authData.split(":");
+  
+      String username = credentials[0];
+      String password = credentials[1];
+  
+      // Validar usuário
+      var hasUser = this.userRepository.findByUsername(username);
+      if (hasUser == null) {
         response.sendError(401, "Unauthorized");
+      } else {
+  
+        // Validar senha
+        var verifiedPassword = BCrypt.verifyer().verify(password.toCharArray(), hasUser.getPassword());
+        if (verifiedPassword.verified) {
+          request.setAttribute("idUser", hasUser.getId());
+          // Seguir execução do código
+          filterChain.doFilter(request, response);
+        } else {
+          // Não não
+          response.sendError(401, "Unauthorized");
+        }
       }
+    }else{
+       filterChain.doFilter(request, response);
     }
   }
 

@@ -18,6 +18,5 @@ Authorization: Basic brxlx 123
  "title": "Fazer alguma coisa",
  "priority": "high",
  "startAt": "2023-10-11T19:00:00",
- "endAt": "2023-10-11T20:00:00",
- "idUser": ""
+ "endAt": "2023-10-11T20:00:00"
 }
