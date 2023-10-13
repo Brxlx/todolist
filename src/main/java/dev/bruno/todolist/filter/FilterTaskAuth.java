@@ -23,7 +23,7 @@ public class FilterTaskAuth extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
 
-    if (request.getServletPath().equals("/api/v1/tasks")) {
+    if (request.getServletPath().startsWith("/api/v1/tasks")) {
 
       // Pegar dados da autenticação
       var encondedAuthData = request.getHeader("Authorization").substring("Basic".length()).trim();

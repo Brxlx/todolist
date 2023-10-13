@@ -17,6 +17,23 @@ Authorization: Basic brxlx 123
  "description": "Tarefa para fazer alguma coisa",
  "title": "Fazer alguma coisa",
  "priority": "high",
- "startAt": "2023-10-12T19:00:00",
- "endAt": "2023-10-12T20:00:00"
+ "startAt": "2023-10-13T19:00:00",
+ "endAt": "2023-10-13T20:00:00"
+}
+
+###
+GET  http://localhost:8081/api/v1/tasks HTTP/1.1
+Content-Type: application/json
+Authorization: Basic brxlx 123
+
+
+###
+PUT http://localhost:8081/api/v1/tasks/9a2e5639-ce19-4d3f-b1d4-82e9b730f085
+Content-Type: application/json
+Authorization: Basic brxlx 123
+
+{
+ "description": "Alter Tarefa para fazer alguma coisa",
+ "title": "Alter fazer alguma coisa"
+
 }
